@@ -53,5 +53,9 @@ RUN dnf -y install \
   neovim \
   tcpdump
 
-  COPY alternate-ssh-port.conf /etc/ssh/sshd_config.d/alternate-ssh-port.conf
-  RUN semanage port -a -t ssh_port_t -p tcp 2222
+COPY alternate-ssh-port.conf /etc/ssh/sshd_config.d/alternate-ssh-port.conf
+RUN semanage port -a -t ssh_port_t -p tcp 2222
+
+
+COPY systemd/bootc-fetch-apply-updates.timer.d/override.conf \
+  /etc/systemd/system/bootc-fetch-apply-updates.timer.d/override.conf
