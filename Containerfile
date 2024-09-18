@@ -51,3 +51,5 @@ RUN dnf -y install \
   lvm2 \
   git \
   neovim
+
+  COPY alternate-ssh-port.conf /etc/ssh/sshd_config.d/alternate-ssh-port.conf
