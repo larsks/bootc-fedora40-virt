@@ -10,6 +10,7 @@ RUN dnf -y install \
   virt-what \
   podman \
   skopeo \
+  buildah \
   libvirt-gconfig \
   libvirt-glib \
   libvirt-gobject \
@@ -47,4 +48,6 @@ RUN dnf -y install \
   libvirt \
   libvirt-daemon-kvm \
   libvirt-nss \
-  lvm2
+  lvm2 \
+  git \
+  neovim
