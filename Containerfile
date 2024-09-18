@@ -53,3 +53,4 @@ RUN dnf -y install \
   neovim
 
   COPY alternate-ssh-port.conf /etc/ssh/sshd_config.d/alternate-ssh-port.conf
+  RUN semanage port -a -t ssh_port_t -p tcp 2222
