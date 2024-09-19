@@ -1,0 +1,29 @@
+#!/bin/bash
+
+: "${BOOTC_BUILDER:="quay.io/centos-bootc/bootc-image-builder:latest"}"
+: "${BOOTC_OUTPUT_DIR:=output}"
+
+while getopts o: ch; do
+  case $ch in
+  o) BOOTC_OUTPUT_DIR=$OPTARG ;;
+  *) exit 2 ;;
+  esac
+done
+shift $((OPTIND - 1))
+
+BOOTC_OUTPUT_DIR="$(readlink -f "$BOOTC_OUTPUT_DIR" 2>/dev/null)"
+if ! [[ -d "$BOOTC_OUTPUT_DIR" ]]; then
+  echo "ERROR: $BOOTC_OUTPUT_DIR: no such directory" >&2
+  exit 2
+fi
+
+sudo podman run \
+  --rm \
+  -it \
+  --privileged \
+  --pull=newer \
+  --security-opt label=type:unconfined_t \
+  -v "$BOOTC_OUTPUT_DIR:/output" \
+  -v /var/lib/containers/storage:/var/lib/containers/storage \
+  "$BOOTC_BUILDER" \
+  "$@"
