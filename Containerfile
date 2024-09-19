@@ -1,16 +1,12 @@
-FROM quay.io/fedora/fedora-bootc:40
+FROM ghcr.io/larsks/bootc-fedora40-cloud:main
 
 RUN dnf -y install \
-  cloud-init \
   virtiofsd \
   virt-manager-common \
   virt-manager \
   virt-viewer \
   virt-install \
   virt-what \
-  podman \
-  skopeo \
-  buildah \
   libvirt-gconfig \
   libvirt-glib \
   libvirt-gobject \
@@ -48,19 +44,10 @@ RUN dnf -y install \
   libvirt \
   libvirt-daemon-kvm \
   libvirt-nss \
-  lvm2 \
-  git \
-  neovim \
-  tcpdump
+  lvm2
 
 COPY alternate-ssh-port.conf /etc/ssh/sshd_config.d/alternate-ssh-port.conf
 RUN semanage port -a -t ssh_port_t -p tcp 2222
-
-
-COPY systemd/bootc-fetch-apply-updates.timer.d/override.conf \
-  /etc/systemd/system/bootc-fetch-apply-updates.timer.d/override.conf
-COPY systemd/bootc-generic-growpart.service.d/override.conf \
-  /etc/systemd/system/bootc-generic-growpart.service.d/override.conf
 
 RUN mkdir -p /usr/local/bin
 COPY bootc-image-builder /usr/local/bin/
