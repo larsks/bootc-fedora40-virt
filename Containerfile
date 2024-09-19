@@ -59,6 +59,8 @@ RUN semanage port -a -t ssh_port_t -p tcp 2222
 
 COPY systemd/bootc-fetch-apply-updates.timer.d/override.conf \
   /etc/systemd/system/bootc-fetch-apply-updates.timer.d/override.conf
+COPY systemd/bootc-generic-growpart.service.d/override.conf \
+  /etc/systemd/system/bootc-generic-growpart.service.d/override.conf
 
 RUN mkdir -p /usr/local/bin
 COPY bootc-image-builder /usr/local/bin/
