@@ -46,6 +46,8 @@ RUN dnf -y install \
   libvirt-nss \
   lvm2
 
+RUN dnf -y install sl
+
 COPY alternate-ssh-port.conf /etc/ssh/sshd_config.d/alternate-ssh-port.conf
 RUN semanage port -a -t ssh_port_t -p tcp 2222
 
